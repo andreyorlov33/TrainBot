@@ -26,12 +26,12 @@ module.exports = (app) => {
         response.render('user-workout');
     });
 
-    app.get('/user/profile', (request, response) =>{
+    app.get('/user/profile', isLoggedIn, (request, response) =>{
         response.render('user-profile');
     })
 
 // Client List
-    app.get('/admin/clients', (request, response) => {
+    app.get('/admin/clients', isLoggedIn, (request, response) => {
         db.User.findAll({
             attributes: ['name', 'username', 'email'],
             include: {
@@ -48,12 +48,12 @@ module.exports = (app) => {
 
 // Create Program page
 
-    app.get('/admin/create', (request, response) => {
+    app.get('/admin/create', isLoggedIn,  (request, response) => {
         response.render('admin-create');
     });
 
 // Form page for NEW WORKOUT
-    app.get('/admin/workout', (request, response) => {
+    app.get('/admin/workout',  isLoggedIn,  (request, response) => {
         db.Program.findAll({
         }).then((result) =>{
             var progList = {
@@ -63,7 +63,7 @@ module.exports = (app) => {
         });
     });
     
-    app.post('/admin/workout/new', (request, response) => {
+    app.post('/admin/workout/new',  isLoggedIn, (request, response) => {
         console.log(request.body);
         db.WorkoutDay.create({
             day: request.body.day,
@@ -76,14 +76,14 @@ module.exports = (app) => {
     });
 
 // Form Page to UPDATE WORKOUT
-    app.get('/admin/workout/update', (request, response) =>{
+    app.get('/admin/workout/update',  isLoggedIn,  (request, response) =>{
         response.render('admin/workout/update');
     });
 
 
 
 // List of all programs
-    app.get('/admin/programs', (request, response) => {
+    app.get('/admin/programs',  isLoggedIn,  (request, response) => {
         db.Program.findAll({
         }).then((result) =>{
             var progObject = {
@@ -94,7 +94,7 @@ module.exports = (app) => {
         });
     });
 
-    app.post('admin/programs', (request, response) =>{
+    app.post('admin/programs',  isLoggedIn,  (request, response) =>{
         db.Program.create({
             name: request.body.name,
             days: request.body.days,
@@ -252,7 +252,7 @@ app.get('/admin/programs/:id', (request, response) => {
 
 
         app.post('/login', passport.authenticate('local', 
-          {  successRedirect: '/',
+          {  successRedirect: '/user/workout',
             failureRedirect: '/signup'}
         ));
 
