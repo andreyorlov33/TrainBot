@@ -11,6 +11,7 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const flash = require('connect-flash');
 // Requiring our models for syncing
 const db = require("./models");
 
@@ -50,6 +51,17 @@ app.use(session({
 app.use(passport.initialize()); //initializes the session
 app.use(passport.session()); //tells passport to be in charge of the session
 
+// flash //
+app.use(flash());
+
+// Global Vars
+app.use( (request, response, next)=> {
+  response.locals.success_msg = request.flash('success_msg');
+  response.locals.error_msg = request.flash('error_msg');
+  response.locals.error =request.flash('error');
+  response.locals.user = request.user || null;
+  next();
+});
 
 
 // Routes =============================================================

@@ -65,26 +65,14 @@
                 <label>Confirm Password:</label>
                 <input type="password" class="form-control" placeholder="Confirm Password" name="password2">
             </div>
-            <button class="submit-button submit-button__register" type="submit">Sign Up</button>
-            <button class="submit-button submit-button__register" type="button">test</button>
-        </form>
-    </div>
-</div>
-
-<!--Workout pick modal-->
-<div class="workout-modal">
-    <div class="workout-modal-content">
-        <span class="close">&times;</span>
-        <h2 class="workout-header">Pick Your Workout Program</h2>
-        <form name="workouts" method="POST" action="">
             {{#each programs}}
                 <div class="workout-text">
-                    <input type="radio" class="form-control" name="workouts" value="{{this.name}}">
+                    <input type="radio" class="form-control" name="workouts" value="{{this.id}}">
                     <label class="workout-label">{{this.name}}</label>
                     <p>{{this.description}}</p>
                 </div>
             {{/each}}
-            <button class ="submit-button" type="submit">Submit</button>
+            <button class="submit-button submit-button__register" type="submit">Sign Up</button>
         </form>
     </div>
 </div>

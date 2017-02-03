@@ -1,0 +1,53 @@
+<!--admin menu-->
+<div class="menu">
+    <span class="close">&times;</span>
+    <a href="/"><img class ="logo" src="/assets/images/trainbot_logo.png" alt="TrainBot"></a>
+    <ul>
+        <a href="/admin/clients"><li>Client List</li></a>
+        <a href="/admin/programs"><li>Programs</li></a>
+        <a href="/admin/create"><li>Create Program</li></a>
+    </ul>
+</div>
+
+<!--admin header-->
+<div class="site-header">
+    <ul>
+        <li class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></li>
+        <li><img class ="logo" src="/assets/images/trainbot_logo.png" alt="TrainBot"></li>
+        <li class="header-button"><button type="button">Logout</button></li>
+    </ul>
+</div>
+
+<div class="create-block">
+    <div class="create-section">
+        <h1 class="create-content-title">Create New Workout</h1>
+        <div class="create-content">
+            <form class="program-form" method="" action="">
+                
+                <div class='create__workout-program'>
+                    <select  class="form-control" id='workout-program' name='program'>
+                        {{#each programs}}
+                            <option value='{{this.id}}'>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class='create__workout-day'>
+                    <label>Day Number:</label>
+                    <input type='number' name='day' id='workout-id' value='1'>
+                </div>
+
+                <div class="create__workout-text">
+                    <label>What is the workout?</label>
+                    <input type='textarea' name='text' id='workout-text' placeholder="A. 3x5 Back Squats etc..">
+                </div>
+               
+                <button class="submit-button submit-workout" type="submit">Next Day...</button>
+            </form>
+        </div>
+
+    </div>
+    <img class="program-banner" src="/assets/images/banner-cement.jpg" alt="cement">
+</div>
+
+<script src="/javascript/admin.js"></script>

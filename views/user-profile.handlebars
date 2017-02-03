@@ -19,24 +19,39 @@
 
 <div class="profile-content">
     <div class="profile-panel">
-        <h1 class="profile-panel-header">Welcome (User)</h1>
+        {{#with info}}
+        <h1 class="profile-panel-header">Welcome {{name}}</h1>
         <div class="profile-progress-block">
-            <h1 class="current-program-title">Check out your progress on the (Current) program!</h1>
+            <h1 class="current-program-title">Check out your progress on the {{Program.name}} program!</h1>
             <a href="/user/workout" class="header-button workout-button"><button type="button">View Workout</button></a>
             <div class="progress-bar">
-                <span>5/60 Days</span>
+                <h1 id={{currentDay}} value="{{Program.days}}">{{currentDay}}/{{Program.days}} Days</h1>
+                <span></span>
             </div>
         </div>
         <div class="profile-info-block">
             <h1 class="profile-info-title">Profile Information</h1>
+            <form method="POST" action="/user/profile?_method=PUT">
             <ul class="info-list">
-                <li>Username: <span>(Username)</span></li>
-                <li>Email: <span>(Email)</span></li>
-                <li>Password: <span>(Password)</span></li>
-                <li>Program: <span>(Program)</span></li>
+                <li>Name: <span class="user-info">{{name}}</span>
+                    <input type="text" name="name" value={{name}}>
+                </li>
+                <li>Username: <span class="user-info">{{username}}</span>
+                    <input type="text" name="username" value={{username}}>
+                </li>
+                <li>Email: <span class="user-info">{{email}}</span>
+                    <input type="email" name="email" value={{email}}>
+                </li>
+                <!--<li>Password: <span class="user-info">{{password}}</span>
+                    <input type="text" name="username" value={{password}}>
+                </li>-->
                 <li class="header-button edit-button"><button type="button">Edit</button></li>
+                <li class="header-button save-button"><button type="submit">Save</button></li>
             </ul>
+            <form>
         </div>
+        {{/with}}
     </div>
     <img class="profile-banner" src="/assets/images/banner-weights.jpg" alt="crossfit">
 </div>
+<script src="/javascript/user.js"></script>

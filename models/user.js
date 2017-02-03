@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes)=> {
     email:{type: DataTypes.STRING },
     name:{type: DataTypes.STRING },
     salt:{type: DataTypes.STRING},
+    currentDay:{type: DataTypes.INTEGER, defaultValue: 1}
  },{
     classMethods: {
       associate: function(models){

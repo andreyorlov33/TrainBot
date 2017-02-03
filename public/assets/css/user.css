@@ -197,12 +197,14 @@
     padding-left: 10px;
 }
 
-.edit-button {
+.edit-button,
+.save-button {
     float: left;
     margin: 0;
 }
 
-.edit-button button {
+.edit-button button,
+.save-button button {
     margin: 0;
 }
 
@@ -215,16 +217,52 @@
     background: #000;
     border-radius: 10px;
     padding: 5px;
+    color:#fff;
+    font-size: 16px;
 }
 
-.progress-bar span {
-    text-align: center;
-    font-size: 16px;
+.progress-bar span,
+.client-bar span {
     padding-top: 2px;
-    width: 25%;
+    width: 0%;
     display: inline-block;
     height: 20px;
     border-radius: 8px;
     background-color: #2bc253;
     overflow: hidden;
+}
+
+.progress-bar h1,
+.client-bar h1 {
+    position: absolute;
+    left: 45%;
+    z-index: 25;
+}
+
+/*profile*/
+
+.info-list input {
+    display: none;
+    color: #000;
+    background-color: rgba(229,229,229, 0.85);
+    border-style: none;
+    border-bottom: 1px solid #fff;
+    margin-left: 5px;
+    font-size: 16px;
+    width: 20%;
+}
+
+.info-list input:focus,
+.info-list input:hover {
+    outline: none;
+    border-bottom: 1px solid #000;
+}
+
+.save-button {
+    display: none;
+}
+
+.save-button button {
+    background-color: #000;
+    color: #fff;
 }

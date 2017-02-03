@@ -34,7 +34,7 @@
 }
 
 .program-div h1,
-.list-section h1 {
+.list-section-title {
     background: rgba(0, 0, 0, 0.3);
     color: #fff;
     float: left;
@@ -132,19 +132,24 @@
 
 .list-content li {
     display: inline-block;
-    padding-right: 10%;
+    padding-right: 5%;
     font-size: 18px;
 }
 
-.client-bar {
-    width: 100%;
+.client-bar { 
+    height: 30px;
     clear: both;
+    width: 100%;
+    background: #000;
+    border-radius: 10px;
+    padding: 5px;
+    color:#fff;
+    font-size: 16px;
     margin-top: 10px;
 }
 
 
 /*create page*/
-
 .create-days-block {
     display: none;
 }

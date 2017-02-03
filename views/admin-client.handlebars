@@ -18,9 +18,13 @@
     </ul>
 </div>
 
+{{#with percents}}
+<div class="data-storage" id={{percent}} style="display:none"></div>
+{{/with}}
+
 <div class="list-block">
     <div class="list-section">
-        <h1>Client List</h1>
+        <h1 class="list-section-title">Client List</h1>
         <div class="list-content">
         {{#each clients}}
                 <ul>
@@ -28,11 +32,10 @@
                     <li>Email: {{email}}</li>
                     <li>User Name: {{username}}</li>
                     <li>Program: {{Program.name}}</li>
-                    <li class="client-bar">
-                        <div class="progress-bar">
-                            <span>5/60 Days</span>
-                        </div>
-                    </li>          
+                    <div class="client-bar">
+                        <h1 id={{currentDay}} value="{{Program.days}}">{{currentDay}}/{{Program.days}} Days</h1>
+                        <span class="span-{{id}}"></span>
+                    </div>        
                 </ul>
         {{/each}}
         </div>
