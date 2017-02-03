@@ -54,7 +54,7 @@ app.use(passport.session()); //tells passport to be in charge of the session
 // flash //
 app.use(flash());
 
-// Global Vars
+// Global VARS //
 app.use( (request, response, next)=> {
   response.locals.success_msg = request.flash('success_msg');
   response.locals.error_msg = request.flash('error_msg');

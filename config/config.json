@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-   "password": "Booya123",
+   "password": "",
     "database": "trainBot_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
