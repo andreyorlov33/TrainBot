@@ -4,7 +4,7 @@
         <span class="close">&times;</span>
         <h2 class="login-header">Account Login</h2>
 
-        <form method="POST" action="/login">
+        <form method="POST">
             <div class="login__username">
                 <label>Username:</label>
                 <input type="text" class="form-control" name="username" placeholder="Username">
@@ -13,7 +13,8 @@
                 <label>Password:</label>
                 <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
-            <button class ="submit-button" type="submit">Login</button>
+            <button class ="submit-button" type="submit" formaction="/login">Login</button>
+            <button class ="submit-button" type="submit" formaction="/login/admin">Admin Login</button>
         </form>
 
         <div class="login-error-block">

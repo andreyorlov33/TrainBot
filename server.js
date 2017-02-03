@@ -39,9 +39,9 @@ app.use(cookieParser());
 
 app.use(session({
   secret: "user secret",
-  // store: new SequelizeStore({
-  //   db: db.sequelize
-  // }),
+  store: new SequelizeStore({
+    
+  }),
   cookie: {maxAge: 180*60*1000},
   resave: true,
   saveUninitialized: true

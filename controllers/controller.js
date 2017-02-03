@@ -125,7 +125,7 @@ module.exports = (app) => {
     //     })
     // });
 
-app.get('/admin/programs/:id', (request, response) => {
+    app.get('/admin/programs/:id', (request, response) => {
         db.Program.findOne({
             where: {
                 id: request.params.id
@@ -207,9 +207,6 @@ app.get('/admin/programs/:id', (request, response) => {
       passport.use(new LocalStrategy.Strategy(
         (username, password, done) => {
         db.User.findOne({ where: { 'username': username }}).then((user) => {
-            console.log(user.get({
-                    plain: true
-                }))
             let hashedPW = bcrypt.hashSync(password, user.salt) 
             if(user.password === hashedPW){
               return  done(null, user);
@@ -253,6 +250,11 @@ app.get('/admin/programs/:id', (request, response) => {
 
         app.post('/login', passport.authenticate('local', 
           {  successRedirect: '/user/workout',
+            failureRedirect: '/signup'}
+        ));
+
+        app.post('/login/admin', passport.authenticate('local', 
+          {  successRedirect: '/admin/clients',
             failureRedirect: '/signup'}
         ));
 
