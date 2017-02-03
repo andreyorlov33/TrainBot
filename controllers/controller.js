@@ -15,7 +15,6 @@ module.exports = (app) => {
             var progObject = {
                 programs: result
             };
-            // console.log(progObject);
             response.render('landing', progObject);
         });
     });
@@ -63,7 +62,7 @@ module.exports = (app) => {
             var userInfo = {
                 info: result
             };
-            console.log(result);
+           
             response.render('user-profile', userInfo);
         });
     });
@@ -127,13 +126,12 @@ module.exports = (app) => {
     
 // Create new workout
     app.post('/admin/create/workout', (request, response) => {
-        console.log(request.body);
+     
         db.WorkoutDay.create({
             day: request.body.day,
             text: request.body.text,
             ProgramId: request.body.program
         }).then((dbWorkOut) => {
-            console.log(dbWorkOut);
             response.render('admin-new-workout');
         });
         
@@ -153,7 +151,7 @@ module.exports = (app) => {
             var progObject = {
                 programs: result
             };
-            console.log(progObject);
+            
             response.render('programs', progObject);
         });
     });
@@ -193,12 +191,10 @@ module.exports = (app) => {
             var userObject = {
                 user: result
             };
-            console.log(userObject);
             response.render('clientUpdate', userObject);
         });
     });
     app.put('/admin/clients/update:id', (request, response) => {
-        console.log(request.body);
         db.User.update({
             ProgramId: request.body.program
         },{
