@@ -33,10 +33,4 @@ Object.keys(db).forEach(function(modelName) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-// Relations
-// db.WorkoutDay.belongsTo(db.Program);
-// db.User.belongsTo(db.Program);
-// db.Program.hasMany(db.User);
-// db.Program.hasMany(db.WorkoutDay);
-
 module.exports = db;

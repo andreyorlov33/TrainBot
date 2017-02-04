@@ -40,7 +40,31 @@ $('.workouts').on('click', '.singleWorkout', (e) =>{
     let progId = $(e.target).data('progId');
 });
 
-// Create new workout AFTER creating new program
+// Create Program Logic at Admin/Create
+$(document).on('click', '.submit-program', (e) => {
+    e.preventDefault();
+
+    let newProgram = {
+        name: $('#program-name').val().trim(),
+        days: $('#program-days').val().trim(),
+        description: $('#program-description').val().trim()
+    }
+    
+    sessionStorage.setItem('days', $('#program-days').val().trim());
+    sessionStorage.setItem('count', '1');
+
+    let queryUrl = '/admin/create';
+
+    $.ajax({
+        method: 'POST',
+        url: queryUrl,
+        data: newProgram
+    }).done(function(){
+        window.location.href = '/admin/create/workout';
+    });
+});
+
+// Create new workout AFTER creating new program at Admin/Create/Workout
 $('.create-content').on('click', '.submit-workout', (e) =>{
     e.preventDefault();
     
@@ -52,8 +76,15 @@ $('.create-content').on('click', '.submit-workout', (e) =>{
         text: $('#workout-text').val().trim(),
         ProgramId: parseInt( $('.workout-program').attr('id') )
     }
-
-    if( parsedCount <= parsedDays){
+    if (parsedCount >= parsedDays){
+        $.ajax({
+            method: 'POST',
+            url: '/admin/create/workout',
+            data: newWorkout
+        }).done(function(){
+            window.location.href = '/admin/programs';
+        });
+    } else {
         parsedCount++;
         sessionStorage.setItem('count', parsedCount);
 
@@ -151,28 +182,3 @@ function addDayInput(){
     newLabel.append(newInput);
     $('.create__workout-day').append(newLabel);
 };
-
-
-// Create Program Logic
-$(document).on('click', '.submit-program', (e) => {
-    e.preventDefault();
-
-    let newProgram = {
-        name: $('#program-name').val().trim(),
-        days: $('#program-days').val().trim(),
-        description: $('#program-description').val().trim()
-    }
-    
-    sessionStorage.setItem('days', $('#program-days').val().trim());
-    sessionStorage.setItem('count', '1');
-
-    let queryUrl = '/admin/create';
-
-    $.ajax({
-        method: 'POST',
-        url: queryUrl,
-        data: newProgram
-    }).done(function(){
-        window.location.href = '/admin/create/workout';
-    });
-});

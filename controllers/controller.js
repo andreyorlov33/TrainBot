@@ -37,7 +37,7 @@ module.exports = (app) => {
             response.render('user-workout', workoutObject);
         });
     });
-
+// Update when user 'COMPLETES' workout -- helps progress tracking bar and getting next workout
     app.put('/user/workout', isLoggedIn, (request, response) => {
         db.User.update(
             request.body,
@@ -48,6 +48,7 @@ module.exports = (app) => {
         });
     });
 
+// Gets User information
     app.get('/user/profile', isLoggedIn, (request, response) => {
         db.User.findOne({
             where: {
@@ -65,7 +66,7 @@ module.exports = (app) => {
             response.render('user-profile', userInfo);
         });
     });
-
+// Updates user's information
     app.put('/user/profile', isLoggedIn, (request, response) => {
         db.User.update({
             name: request.body.name,
@@ -144,8 +145,6 @@ module.exports = (app) => {
         response.render('admin/workout/update');
     });
 
-
-
 // gets all of the programs
     app.get('/admin/programs', (request, response) => {
         db.Program.findAll({
@@ -156,17 +155,6 @@ module.exports = (app) => {
             response.render('programs', progObject);
         });
     });
-
-// creates new program
-    // app.post('admin/programs', (request, response) =>{
-    //     db.Program.create({
-    //         name: request.body.name,
-    //         days: request.body.days,
-    //         description: request.body.description
-    //     }).then((dbProgram)=>{
-    //         response.json(dbProgram);
-    //     });
-    // });
 
 // gets the individual workout program
     app.get('/admin/programs/:id', (request, response) => {
@@ -206,24 +194,24 @@ module.exports = (app) => {
     });
 
     
-        app.post('/login', passport.authenticate('local-signIn', 
-          {  successRedirect: '/user/workout',
-            failureRedirect: '/',
-            failureFlash: true
-        }
-        ));
+    app.post('/login', passport.authenticate('local-signIn', 
+        {  successRedirect: '/user/workout',
+        failureRedirect: '/',
+        failureFlash: true
+    }
+    ));
 
-        app.post('/login/admin', passport.authenticate('local-signIn', 
-          {  successRedirect: '/admin/clients',
-            failureRedirect: '/',
-            failureFlash: true}
-        ));
+    app.post('/login/admin', passport.authenticate('local-signIn', 
+        {  successRedirect: '/admin/clients',
+        failureRedirect: '/',
+        failureFlash: true}
+    ));
 
-        app.get('/logout', isLoggedIn, (request, response, next) => {
-            request.logout();
-            request.flash('success_msg', "You are logged out");
-            response.redirect('/');
-        })
+    app.get('/logout', isLoggedIn, (request, response, next) => {
+        request.logout();
+        request.flash('success_msg', "You are logged out");
+        response.redirect('/');
+    })
 
 
     // User Registration routes    
