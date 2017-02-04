@@ -1,3 +1,24 @@
+<!--Error Block-->
+<div class="error-block">
+    {{#if success_msg}}
+    <div class="alert alert-success">{{success_msg}}</div>
+    {{/if}}
+
+    {{#if error_msg}}
+    <div class="alert alert-danger">{{error_msg}}</div>
+    {{/if}}
+
+    {{#if error}}
+    <div class="alert alert-danger">{{error}}</div>
+    {{/if}}
+
+    {{#if errors}}
+        {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+    {{/if}}
+</div>
+
 <!--Login Modal-->
 <div class="login-modal">
     <div class="login-modal-content">
@@ -16,20 +37,6 @@
             <button class ="submit-button" type="submit" formaction="/login">Login</button>
             <button class ="submit-button" type="submit" formaction="/login/admin">Admin Login</button>
         </form>
-
-        <div class="login-error-block">
-            {{#if success_msg}}
-                <div class="alert alert-success">{{success_msg}}</div>
-            {{/if}}
-
-            {{#if error_msg}}
-                <div class="alert alert-danger">{{error_msg}}</div>
-            {{/if}}
-
-            {{#if error}}
-                <div class="alert alert-danger">{{error}}</div>
-            {{/if}}
-        </div>
     </div>
 </div>
 
@@ -37,13 +44,6 @@
 <div class="register-modal">
     <div class="register-modal-content">
         <span class="close">&times;</span><h2 class="register-header">Sign Up!</h2>
-
-        {{#if errors}}
-            {{#each errors}}
-                <div class="alert alert-danger">{{msg}}</div>
-            {{/each}}
-        {{/if}}
-
         <form method="POST" action="/users/register">
             <div class="register__name"> 
                 <label>Name:</label>

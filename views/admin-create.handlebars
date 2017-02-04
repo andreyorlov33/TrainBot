@@ -1,3 +1,24 @@
+<!--Error Block-->
+<div class="error-block">
+    {{#if success_msg}}
+    <div class="alert alert-success">{{success_msg}}</div>
+    {{/if}}
+
+    {{#if error_msg}}
+    <div class="alert alert-danger">{{error_msg}}</div>
+    {{/if}}
+
+    {{#if error}}
+    <div class="alert alert-danger">{{error}}</div>
+    {{/if}}
+
+    {{#if errors}}
+        {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+    {{/if}}
+</div>
+
 <!--admin menu-->
 <div class="menu">
     <span class="close">&times;</span>
@@ -14,7 +35,7 @@
     <ul>
         <li class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></li>
         <li><img class ="logo" src="/assets/images/trainbot_logo.png" alt="TrainBot"></li>
-        <li class="header-button"><button type="button">Logout</button></li>
+        <li class="header-button"><a href="/logout"><button type="button">Logout</button></a></li>
     </ul>
 </div>
 
@@ -32,25 +53,12 @@
                     <input type="text" class="form-control" placeholder="e.g. 1, 2, 3 ..." id="program-days">
                 </div>
                 <div class="create__program-description">
-                    <label>Program Description:</label>
+                    <label class="program-label">Program Description:</label>
                     <textarea id='program-description'></textarea>
                 </div>
                 <button class="submit-button submit-program" type="submit">Create</button>
-                <button class="submit-button submit-button-test" type="button">test</button>
             </form>
         </div>
-
-        <div class="create-days-block">
-            <form class="create-days-form">
-                <h1>Day 1</h1>
-                <div class="workout-info">
-                    <label>Workout:</label>
-                    <textarea></textarea>
-                </div>
-                <button class="submit-button submit-button-day" type="button">Next Day</button>
-            </form>
-        </div>
-
     </div>
     <img class="program-banner" src="/assets/images/banner-cement.jpg" alt="cement">
 </div>

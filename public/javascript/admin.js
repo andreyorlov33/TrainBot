@@ -10,10 +10,17 @@ $(document).ready(() => {
     }
 });
 
-$(".back-button").on("click", () => {
-    $(".program_section").show();
-    $(".workouts").hide();
-    $(".workouts-content-block").empty();
+// Allows us to use the addDayInput function
+$(document).ready(() => {
+    $('.create__workout-day').empty();
+    addDayInput();
+})
+
+// Go back button...solid
+$('.back-button').on('click', () => {
+    $('.program_section').show();
+    $('.workouts').hide();
+    $('.workouts-content-block').empty();
 });
 
 
@@ -22,7 +29,6 @@ $('.program_section').on('click','.programChoice' , (e) =>{
     e.preventDefault();
     let id = $(e.target).attr('id');
     let program = $(e.target).attr('value');
-    // console.log( program );
     getWorkout(id, program);
 });
 
@@ -32,25 +38,27 @@ $('.workouts').on('click', '.singleWorkout', (e) =>{
     e.preventDefault();
     let dayId = $(e.target).data('dayId');
     let progId = $(e.target).data('progId');
-    console.log(dayId + " " + progId);
 });
 
+// Create new workout AFTER creating new program
 $('.create-content').on('click', '.submit-workout', (e) =>{
     e.preventDefault();
-    let parsedDays = parseInt( sessionStorage.getItem('days') );
-    let parsedCount = parseInt( sessionStorage.getItem('count') );
+    
+    var parsedDays = parseInt( sessionStorage.getItem('days') );
+    var parsedCount = parseInt( sessionStorage.getItem('count') );
 
-    let newWorkout = {
+    var newWorkout = {
         day: $('#workout-id').val().trim(),
         text: $('#workout-text').val().trim(),
-        ProgramId: $('#workout-program').val()
+        ProgramId: parseInt( $('.workout-program').attr('id') )
     }
-    console.log( $('#workout-program').val().trim() );
+
     if( parsedCount <= parsedDays){
-        $('#workout-id').attr({value: parsedCount });
-        sessionStorage.setItem('count', (parsedCount + 1) );
+        parsedCount++;
+        sessionStorage.setItem('count', parsedCount);
+
         $.ajax({
-            method: "POST",
+            method: 'POST',
             url: '/admin/create/workout',
             data: newWorkout
         }).done(function(){
@@ -60,6 +68,7 @@ $('.create-content').on('click', '.submit-workout', (e) =>{
 
 });
 
+// Adds all Workouts from a particular program
 function getWorkout(id, program){
     $('.program_section').hide();
     $('.workouts').show();
@@ -87,30 +96,31 @@ function getWorkout(id, program){
 
             $(newDiv).prepend(h3);
             $(newDiv).append(p);
-            $(newDiv).append( addUpdateButton(day, program) );
+            // $(newDiv).append( addUpdateButton(day, program) );
             $('.workouts-content-block').append(newDiv);  
         }
     });
 };
 
-function addUpdateButton(day, program){
-    var newBtn = $('<button>');
-    var btnDiv = $('<div>');
-    newBtn.attr({
-        type: 'submit',
-    });
-    newBtn.data({
-        dayId: day,
-        progId: program
-    });
-    newBtn.text("Update Workout?");
-    $(btnDiv).append(newBtn)
-    btnDiv.addClass("header-button update-button");
-    return btnDiv;
-};
+// Puts update button on individual workout, from the Admin/Program/Workout
+// function addUpdateButton(day, program){
+//     var newBtn = $('<button>');
+//     var btnDiv = $('<div>');
+//     newBtn.attr({
+//         type: 'submit',
+//     });
+//     newBtn.data({
+//         dayId: day,
+//         progId: program
+//     });
+//     newBtn.text('Update Workout?');
+//     $(btnDiv).append(newBtn)
+//     btnDiv.addClass('header-button update-button');
+//     return btnDiv;
+// };
 
 
-
+// Update button for individual workout, from the Admin/Program/Workout
 function updateWorkout(){
     $('.program_section').hide();
     $('.workouts').hide();
@@ -118,33 +128,51 @@ function updateWorkout(){
     let queryUrl = '/admin/programs/update';
 
     $.ajax({
-        method: "PUT",
+        method: 'PUT',
         url: queryUrl,
         data: update
     }).done(function(){
-        window.location.href = "/admin/programs/update";
+        window.location.href = '/admin/programs/update';
     }); 
+};
+
+// Adds the Day Input Field so we Auto-Increment the day number
+function addDayInput(){
+    let parsedCount = parseInt( sessionStorage.getItem('count') );
+    let newLabel = $('<label>');
+    newLabel.html('Day Number: ');
+    let newInput = $('<input>');
+    newInput.attr({
+        type: 'number',
+        name: 'day',
+        id: 'workout-id',
+        value: parsedCount
+    });
+    newLabel.append(newInput);
+    $('.create__workout-day').append(newLabel);
 };
 
 
 // Create Program Logic
-
-$(document).on("click", ".submit-program", (e) => {
+$(document).on('click', '.submit-program', (e) => {
     e.preventDefault();
+
     let newProgram = {
         name: $('#program-name').val().trim(),
         days: $('#program-days').val().trim(),
         description: $('#program-description').val().trim()
     }
-    let queryUrl = '/admin/create';
-    sessionStorage.setItem("days", $('#program-days').val().trim());
-    sessionStorage.setItem('count', '1');
     
+    sessionStorage.setItem('days', $('#program-days').val().trim());
+    sessionStorage.setItem('count', '1');
+
+    let queryUrl = '/admin/create';
+
     $.ajax({
-        method: "POST",
+        method: 'POST',
         url: queryUrl,
         data: newProgram
     }).done(function(){
-        window.location.href = "/admin/create/workout";
+        window.location.href = '/admin/create/workout';
     });
 });

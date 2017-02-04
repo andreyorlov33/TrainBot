@@ -153,3 +153,63 @@
 .create-days-block {
     display: none;
 }
+
+.create-content {
+    padding: 15px;
+}
+
+.program-form div {
+    margin-bottom: 10px;
+}
+
+.program-label,
+.workout-enter-label {
+    float: left;
+}
+
+#program-description,
+#workout-text {
+    clear: both;
+    width: 40%;
+    height: 200px;
+    float: left;
+}
+
+.submit-program,
+.submit-workout {
+    clear: both;
+    float: left;
+}
+
+.program-form input {
+    color: #000;
+    background: #fff;
+    border-style: none;
+    border-bottom: 1px solid #fff;
+    margin-left: 5px;
+    font-size: 16px;
+    width: 20%;
+    border-radius: 5px;
+}
+
+.program-form input:focus,
+.program-form input:hover {
+    outline: none;
+    border-bottom: 1px solid #000;
+}
+
+.program-form textarea,
+#workout-text {
+    color: #000;
+    background: #fff;
+    border-style: none;
+    border: 1px solid #000;
+    font-size: 14px;
+    border-radius: 5px;
+    resize: none;
+}
+
+.program-form textarea:hover,
+.program-form textarea:focus {
+    outline: none;
+}
