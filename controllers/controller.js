@@ -39,11 +39,6 @@ module.exports = (app) => {
         });
     });
 
-<<<<<<< HEAD
-    app.get('/user/profile', isLoggedIn, (request, response) =>{
-        response.render('user-profile');
-    })
-=======
     app.put('/user/workout', isLoggedIn, (request, response) => {
         db.User.update(
             request.body,
@@ -84,10 +79,9 @@ module.exports = (app) => {
             response.redirect('/user/profile');
         })
     });
->>>>>>> 451709711033c5dfce40d48a3a98759ecdcc006d
 
 // Client List
-    app.get('/admin/clients', isLoggedIn, (request, response) => {
+    app.get('/admin/clients', (request, response) => {
         db.User.findAll({
             attributes: ['id', 'name', 'username', 'email', 'currentDay'],
             include: {
@@ -95,35 +89,19 @@ module.exports = (app) => {
                 attributes: ['name', 'description', 'days']
             }
         }).then((result) =>{
-            var percentArray = [];
-            for (var i = 0; i < result.length; i++){
-                var currentDay = result[i].dataValues.currentDay;
-                var day = result[i].dataValues.Program.dataValues.days;
-                var percent = (currentDay / day) * 100;
-                percentArray.push(percent);
+            var lengthObject = {
+                length: result.length
             }
-
-            var percentObject = {
-                percent: percentArray
-            }
-
             var clientList = {
                 clients: result,
-                percents: percentObject
+                length: lengthObject
             };
-
             response.render('admin-client', clientList);
         });
     });
 
-<<<<<<< HEAD
-// Create Program page
-
-    app.get('/admin/create', isLoggedIn,  (request, response) => {
-=======
 // New program page
     app.get('/admin/create', (request, response) => {
->>>>>>> 451709711033c5dfce40d48a3a98759ecdcc006d
         response.render('admin-create');
     });
 
@@ -132,37 +110,28 @@ module.exports = (app) => {
         db.Program.create(
             request.body
         ).then( (dbPost) => {
+            console.log(dbPost);
             response.json(dbPost);
         });
     });
 
 // Form page for NEW WORKOUT
-<<<<<<< HEAD
-    app.get('/admin/workout',  isLoggedIn,  (request, response) => {
-=======
     app.get('/admin/create/workout', (request, response) => {
->>>>>>> 451709711033c5dfce40d48a3a98759ecdcc006d
+
         db.Program.findAll({
         }).then((result) =>{
+            var thingy = result.length - 1;
             var progList = {
-                programs: result
+                programs: result[thingy]
             };
             response.render('admin-new-workout', progList);
         });
     });
     
-<<<<<<< HEAD
-    app.post('/admin/workout/new',  isLoggedIn, (request, response) => {
-=======
 // Create new workout
     app.post('/admin/create/workout', (request, response) => {
->>>>>>> 451709711033c5dfce40d48a3a98759ecdcc006d
-        console.log(request.body);
-        db.WorkoutDay.create({
-            day: request.body.day,
-            text: request.body.text,
-            ProgramId: request.body.program
-        }).then((dbWorkOut) => {
+        db.WorkoutDay.create(request.body)
+        .then((dbWorkOut) => {
             console.log(dbWorkOut);
             response.render('admin-new-workout');
         });
@@ -170,19 +139,14 @@ module.exports = (app) => {
     });
 
 // Form Page to UPDATE WORKOUT
-    app.get('/admin/workout/update',  isLoggedIn,  (request, response) =>{
+    app.get('/admin/workout/update', (request, response) =>{
         response.render('admin/workout/update');
     });
 
 
 
-<<<<<<< HEAD
-// List of all programs
-    app.get('/admin/programs',  isLoggedIn,  (request, response) => {
-=======
 // gets all of the programs
     app.get('/admin/programs', (request, response) => {
->>>>>>> 451709711033c5dfce40d48a3a98759ecdcc006d
         db.Program.findAll({
         }).then((result) =>{
             var progObject = {
@@ -193,37 +157,6 @@ module.exports = (app) => {
         });
     });
 
-<<<<<<< HEAD
-    app.post('admin/programs',  isLoggedIn,  (request, response) =>{
-        db.Program.create({
-            name: request.body.name,
-            days: request.body.days,
-            description: request.body.description
-        }).then((dbProgram)=>{
-            response.json(dbProgram);
-        });
-    });
-
-
-// List of workouts for individual program
-    // app.get('/admin/programs/:id', (request, response) => {
-    //     db.Program.findOne({
-    //         where: {
-    //             id: request.params.id
-    //         },
-    //         attributes: ['id', 'name'],
-    //         include: {
-    //             model: db.WorkoutDay,
-    //             attributes: ['day', 'text']    
-    //         }
-    //     }).then((results) =>{
-    //         var progDetails = {
-    //             details: results
-    //         };
-    //         console.log(progDetails);
-    //         response.render('details', progDetails)
-    //     })
-=======
 // creates new program
     // app.post('admin/programs', (request, response) =>{
     //     db.Program.create({
@@ -233,7 +166,6 @@ module.exports = (app) => {
     //     }).then((dbProgram)=>{
     //         response.json(dbProgram);
     //     });
->>>>>>> 451709711033c5dfce40d48a3a98759ecdcc006d
     // });
 
 // gets the individual workout program
@@ -341,10 +273,7 @@ module.exports = (app) => {
       passport.use('local-signIn', new LocalStrategy.Strategy(
         (username, password, done) => {
         db.User.findOne({ where: { 'username': username }}).then((user) => {
-<<<<<<< HEAD
-=======
             if(!user){return done(null, false, {message:'Unknown User'})}
->>>>>>> 451709711033c5dfce40d48a3a98759ecdcc006d
             let hashedPW = bcrypt.hashSync(password, user.salt) 
             if(user.password === hashedPW){
               return  done(null, user);
