@@ -131,10 +131,6 @@ module.exports = (app) => {
     app.post('/admin/create/workout', (request, response) => {
         db.WorkoutDay.create(request.body)
         .then((dbWorkOut) => {
-<<<<<<< HEAD
-            console.log(dbWorkOut);
-=======
->>>>>>> 9ec4dd3a4cc555d0ff8cb5e929cf4ddbb76e0b36
             response.render('admin-new-workout');
         });
         
@@ -194,20 +190,20 @@ module.exports = (app) => {
     });
 
     
-    app.post('/login', passport.authenticate('local-signIn', 
+    app.post('/login', isUser, passport.authenticate('local-signIn', 
         {  successRedirect: '/user/workout',
         failureRedirect: '/',
         failureFlash: true
     }
     ));
 
-    app.post('/login/admin', passport.authenticate('local-signIn', 
+    app.post('/login/admin', isTrainer, passport.authenticate('local-signIn', 
         {  successRedirect: '/admin/clients',
         failureRedirect: '/',
         failureFlash: true}
     ));
 
-    app.get('/logout', isLoggedIn, (request, response, next) => {
+    app.get('/logout', notLoggedIn, (request, response, next) => {
         request.logout();
         request.flash('success_msg', "You are logged out");
         response.redirect('/');
@@ -222,6 +218,7 @@ module.exports = (app) => {
          let password = request.body.password;
          let password2 = request.body.password2;
          let program = request.body.workouts;
+         let type= request.body.type;
          
           request.checkBody('name', 'Name is required').notEmpty();
           request.checkBody('email', 'Email is required').notEmpty();
@@ -241,13 +238,20 @@ module.exports = (app) => {
                      name: name,
                      username: username,
                      password: hashedPassword,
+                     type: type,
                      salt: salt,
                      email: email,
                      ProgramId: program
                  }).then(
                     (user)=>{
-                       passport.authenticate("local-signIn", {failureRedirect:"/signup", successRedirect: "/user/profile"})(request, response) 
-                       request.flash('success_msg', 'You are registered and can now login');
+                        if(user.type === 'user'){
+                             passport.authenticate("local-signIn", {failureRedirect:"/", successRedirect: "/user/profile"})(request, response) 
+                             request.flash('success_msg', 'You are registered and can now login');
+                        }
+                            if(user.type === 'trainer'){
+                             passport.authenticate("local-signIn", {failureRedirect:"/", successRedirect: "/admin/clients"})(request, response) 
+                             request.flash('success_msg', 'You are registered and can now login');
+                        }
                      }
              )}
      });
@@ -269,6 +273,26 @@ module.exports = (app) => {
         }
       ));
 
+    function isUser(request, response, next){
+        db.User.findOne({where: {'username': request.body.username}}).then((user)=>{
+            if(user.type === 'user'){
+                return next();
+            }
+            response.send(401, 'Unauthorized');
+        })
+            
+            
+        }  
+
+    function isTrainer(request, response, next){
+           db.User.findOne({where: {'username': request.body.username}}).then((user)=>{
+            if(user.type === 'trainer'){
+                return next();
+            }
+            response.send(401, 'Unauthorized');
+        })
+            
+        }
       // function that allowes rout access only to logged in users /// 
       function isLoggedIn(request, response, next){
           if(request.isAuthenticated()){

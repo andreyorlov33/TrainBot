@@ -40,6 +40,37 @@
     </div>
 </div>
 
+<!--Trainer Modal-->
+<div class="register-modal" id="trainer">
+    <div class="register-modal-content">
+        <span class="close">&times;</span><h2 class="register-header">Register Trainer!</h2>
+        <form method="POST" action="/users/register">
+            <div class="register__name"> 
+                <label>Name:</label>
+                <input type="text" class="form-control" placeholder="Trainers Name" name="name">
+            </div>
+            <div class="register__username">
+                <label>Username:</label>
+                <input type="text" class="form-control" placeholder="Trainers Username" name="username">
+            </div>
+            <div class="register__email">
+                <label>Email:</label>
+                <input type="email" class="form-control" placeholder="Trainers Email" name="email">
+            </div>
+            <div class="register__password">
+                <label>Password:</label>
+                <input type="password" class="form-control" placeholder="Password" name="password">
+            </div>
+            <div class="register__password--confirm">
+                <label>Confirm Password:</label>
+                <input type="password" class="form-control" placeholder="Confirm Password" name="password2">
+                <input type="hidden" value="trainer" name="type"></input>
+                  <button class="submit-button submit-button__register" type="submit">Register Trainer</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!--Register Modal-->
 <div class="register-modal">
     <div class="register-modal-content">
@@ -72,7 +103,8 @@
                     <p>{{this.description}}</p>
                 </div>
             {{/each}}
-            <button class="submit-button submit-button__register" type="submit">Sign Up</button>
+            <input type="hidden" value="user" name="type"></input>
+             <button class="submit-button submit-button__register" type="submit">Sign Up</button>
         </form>
     </div>
 </div>
@@ -83,6 +115,7 @@
         <li><img class ="logo" src="/assets/images/trainbot_logo.png" alt="TrainBot"></li>
         <li class="header-button login-button"><button type="button">Login</button></li>
         <li class="header-button register-button"><button type="button">Sign Up!</button></li>
+        <li class="header-button trainer-register-button"><button type="button">Trainer Registration</button></li>
     </ul>
 </div>
 

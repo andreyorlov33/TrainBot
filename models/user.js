@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes)=> {
     username:{type: DataTypes.STRING },
     password:{type: DataTypes.STRING },
     email:{type: DataTypes.STRING },
+    type:{type: DataTypes.STRING },
     name:{type: DataTypes.STRING },
     salt:{type: DataTypes.STRING},
     currentDay:{type: DataTypes.INTEGER, defaultValue: 1}

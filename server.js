@@ -12,12 +12,10 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const flash = require('connect-flash');
-// Requiring our models for syncing
 const db = require("./models");
 
 
 // Sets up the Express App
-// =============================================================
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -28,16 +26,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(expressValidator());
+
 // handle bars //
 app.use(express.static(process.cwd() + "/public"));
 app.use(methodOverride("_method"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
 // Static directory
 app.use(express.static("./public"));
 app.use(cookieParser());
-// express session setting // 
 
+
+// express session setting // 
 app.use(session({
   secret: "user secret",
   // store: new SequelizeStore({

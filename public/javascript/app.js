@@ -8,6 +8,10 @@ $(document).on("click", ".register-button button", () => {
     $(".register-modal").show();
 });
 
+$(document).on("click", ".trainer-register-button button", () => {
+    $("#trainer").show();
+});
+
 // hide login and register modal on close button click
 $(document).on("click", ".close", () => {
     $(".register-modal").hide();
